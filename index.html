@@ -3,60 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QuyOng_Silicol | Profile</title>
+    <title>ChangBellWeMienStay | Profile</title>
     <style>
         :root {
-            --primary-color: #00ffa3; /* Neon Green */
-            --bg-color: #0a0a0a;
-            --card-bg: #151515;
-            --text-gray: #a0a0a0;
+            --primary-color: #00ffa3; 
+            --bg-color: #050505;
+            --card-bg: #111111;
+            --text-gray: #b0b0b0;
+            --discord-color: #5865F2;
+            --junkie-color: #A020F0; /* Purple highlight */
+            --script-color: #D8BFD8; /* Light Purple highlight */
+            --roblox-color: #ffffff;
         }
 
         body {
             background-color: var(--bg-color);
             color: white;
-            font-family: 'Inter', 'Segoe UI', Roboto, sans-serif;
+            font-family: 'Inter', 'Segoe UI', sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             margin: 0;
             overflow: hidden;
+            -webkit-tap-highlight-color: transparent;
         }
 
-        /* Subtle background glow effect */
         body::before {
             content: "";
             position: absolute;
-            width: 300px;
-            height: 300px;
+            width: 400px;
+            height: 400px;
             background: var(--primary-color);
-            filter: blur(150px);
-            opacity: 0.1;
+            filter: blur(180px);
+            opacity: 0.15;
             z-index: -1;
         }
 
         .profile-card {
             background: var(--card-bg);
             padding: 40px;
-            border-radius: 24px;
+            border-radius: 28px;
             text-align: center;
             width: 340px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 1);
             border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: transform 0.3s ease;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         .profile-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-10px);
+            border-color: rgba(0, 255, 163, 0.3);
+            box-shadow: 0 25px 70px rgba(0, 255, 163, 0.1);
         }
 
-        /* Live Roblox Avatar */
         .avatar-container {
             position: relative;
-            width: 150px;
-            height: 150px;
-            margin: 0 auto 20px;
+            width: 140px;
+            height: 140px;
+            margin: 0 auto 25px;
         }
 
         .avatar {
@@ -64,74 +69,85 @@
             height: 100%;
             border-radius: 50%;
             border: 3px solid var(--primary-color);
-            background: #202020;
-            box-shadow: 0 0 25px rgba(0, 255, 163, 0.2);
+            box-shadow: 0 0 30px rgba(0, 255, 163, 0.4);
             object-fit: cover;
+            transition: 0.3s;
+        }
+
+        .profile-card:hover .avatar {
+            transform: rotate(5deg) scale(1.05);
+            box-shadow: 0 0 45px rgba(0, 255, 163, 0.6);
         }
 
         h1 {
             margin: 10px 0 5px;
-            font-size: 26px;
-            font-weight: 700;
+            font-size: 24px; /* Chỉnh nhỏ lại một tí vì tên mới dài hơn */
+            font-weight: 800;
             letter-spacing: -0.5px;
+            background: linear-gradient(to right, #fff, var(--primary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .tagline {
             color: var(--text-gray);
             font-size: 14px;
-            margin-bottom: 30px;
+            margin-bottom: 35px;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
+            font-weight: 600;
         }
 
-        /* Buttons Style */
         .links-group {
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 16px;
         }
 
         .btn {
-            padding: 14px;
-            border-radius: 12px;
+            position: relative;
+            padding: 14px 20px;
+            border-radius: 14px;
             text-decoration: none;
             color: white;
             font-weight: 600;
             font-size: 15px;
-            transition: all 0.25s ease;
+            transition: 0.3s all ease;
             display: flex;
             align-items: center;
-            justify-content: center;
             background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            overflow: hidden;
         }
 
-        .btn-discord { 
-            background: #5865F2; 
-            border: none;
-        }
-        
-        .btn-junkie { 
-            background: #ff4500; 
-            border: none;
-        }
-
-        .btn-script { 
-            border-color: #2ecc71;
-            color: #2ecc71;
+        .btn img {
+            width: 22px;
+            height: 22px;
+            margin-right: 15px;
+            object-fit: contain;
         }
 
         .btn:hover {
-            transform: scale(1.03);
-            filter: brightness(1.1);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+            transform: scale(1.05);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        /* Hover Effects */
+        .btn-discord:hover { box-shadow: 0 0 20px rgba(88, 101, 242, 0.5); border-color: var(--discord-color); }
+        .btn-junkie:hover { box-shadow: 0 0 20px rgba(160, 32, 240, 0.6); border-color: var(--junkie-color); }
+        .btn-script:hover { box-shadow: 0 0 20px rgba(216, 191, 216, 0.5); border-color: var(--script-color); }
+        .btn-roblox:hover { box-shadow: 0 0 20px rgba(255, 255, 255, 0.3); border-color: var(--roblox-color); }
+
+        .btn:active {
+            transform: scale(0.98);
         }
 
         .footer {
-            margin-top: 35px;
-            font-size: 11px;
+            margin-top: 40px;
+            font-size: 10px;
             color: #444;
             letter-spacing: 1px;
+            text-transform: uppercase;
         }
     </style>
 </head>
@@ -139,21 +155,36 @@
 
     <div class="profile-card">
         <div class="avatar-container">
-            <img class="avatar" src="https://www.roblox.com/headshot-thumbnail/image?userId=5537576674&width=150&height=150&format=png" alt="QuyOng_Silicol Avatar">
+            <img class="avatar" src="https://p9-sign-sg.tiktokcdn.com/tos-alisg-avt-0068/f6782c8e0e4a60a94a4c181324633303~tplv-tiktokx-cropcenter:1080:1080.jpeg?dr=14579&refresh_token=3bf59d88&x-expires=1776070800&x-signature=D3EZH0Ax%2BNr9QFTxRzp%2B1Ie5vaI%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=sg1" alt="Avatar">
         </div>
         
-        <h1>QuyOng_Silicol</h1>
-        <div class="tagline">Developer & Scripter</div>
+        <h1>ChangBellWeMienStay</h1>
+        <div class="tagline">Developer</div>
 
         <div class="links-group">
-            <a href="https://discord.gg/WW3f7Nmd" target="_blank" class="btn btn-discord">Discord Server</a>
-            <a href="https://jnkie.com/overview/monodistx10" target="_blank" class="btn btn-junkie">Junkie Development</a>
-            <a href="https://scriptblox.com/u/Unlikely_human" target="_blank" class="btn btn-script">Scriptblox Profile</a>
-            <a href="https://www.roblox.com/users/5537576674/profile" target="_blank" class="btn">Roblox Profile</a>
+            <a href="https://discord.gg/WW3f7Nmd" target="_blank" class="btn btn-discord">
+                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAMAAABF0y+mAAAASFBMVEVHcExYZPFXZPJXZPFXZPFXZPFXZPFXZPFYZPJYZfJYZPJXZfFWY/JhbfNsd/OSmvbS1fv////x8/6pr/hQXvLl5/2Bi/XAxfpYg8U1AAAADHRSTlMADzmFwOT8YtP/sloPkm6kAAABAklEQVR4AYWTBbLFIAxFcXs4lf3vFEg1X2+9JzITIZco40IqJQVnlGBRbewtoxFmziI59rCPRGhIfn5hiLKDYSkJkemZz98689IB9YlCjPMlxnBgr4ejgTebcqltqJacLFBDCQPHJZWX0gIOjHB4Lusbrgu4ciKQI3IVRALMGGaAkqgZNdQRK4U8foc0MtQw46oDbmC9pBkQomwHlBPOlOsW9lL2sK1XUknETNnKpNOl5slKm1AQfsFaxw2eF+RQBB9HwLq3PedxG3CPMyc7yufDqF6b5Q2+jfoFf5SPaH/WPXhQuCqvn5bNVqEXR1GzkST7e0wwxeyX0fSO/T/Uf65DBzQNHUMopTvLAAAAAElFTkSuQmCC" alt="Icon">
+                Discord Server
+            </a>
+
+            <a href="https://jnkie.com/overview/monodistx10" target="_blank" class="btn btn-junkie">
+                <img src="https://jnkie.com/favicon.ico" alt="Icon">
+                Junkie Development
+            </a>
+
+            <a href="https://scriptblox.com/u/Unlikely_human" target="_blank" class="btn btn-script">
+                <img src="https://scriptblox.com/favicon.ico" alt="Icon">
+                Scriptblox Profile
+            </a>
+
+            <a href="https://www.roblox.com/users/5537576674/profile" target="_blank" class="btn btn-roblox">
+                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAM1BMVEVHcEwiIiIiIiIiIiIEAwIWFRW4wsz9/f6Ah43r7vLa4OeotL9kaW1KTU+RoK3I0duaqbezsCU5AAAAA3RSTlMARtYz5Vu8AAAA7ElEQVR4AYXTRwLCMAxE0RCPFLlI8f1PiwtFpn52nkdPtu2yh6/tl7aHn122/TfYt/AnBwD6BcAHi0dvIB6tlAs55ADpcS+ZTrMCOVyRpaEFgG/To5RXEB9bunXCA+17eo4t84DMb7PiAXhsCSq5j9weRA7QfGIGATi5l/23oDKB9EOdQBZg4/BU6r8I556SA+AZQIQ8w/JL9hdoh5xFA9dcaxUPqHAe1Y7qqCzA5joWG9VADoDrLXuE5d8Uc+NIVkAIRcyRquTBNNAi/iOsYBgCabGBEDxYUVAxeQceAUQe/Ozvrff35v17+18B5OUXAh1fAAgAAAAASUVORK5CYII=" alt="Icon">
+                Roblox Profile
+            </a>
         </div>
 
         <div class="footer">
-            POWERED BY GITHUB • 2026
+            Developed by myself • 2026
         </div>
     </div>
 
