@@ -13,7 +13,6 @@
             --text-gray: #b0b0b0;
         }
 
-        /* Animation Rung Card khi nổ Flashbang */
         @keyframes shake {
             0% { transform: translate(1px, 1px) rotate(0deg); }
             10% { transform: translate(-1px, -2px) rotate(-1deg); }
@@ -40,7 +39,6 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* Lớp phủ Flashbang */
         #flash-overlay {
             position: fixed; inset: 0; background: white; opacity: 0;
             pointer-events: none; z-index: 9999;
@@ -59,7 +57,6 @@
             z-index: 1;
         }
 
-        /* Nút 3 gạch */
         .menu-btn {
             position: absolute; top: 20px; right: 20px;
             cursor: pointer; color: var(--text-gray);
@@ -67,7 +64,6 @@
         }
         .menu-btn:hover { color: var(--primary-color); transform: rotate(90deg); }
 
-        /* Menu Settings */
         .settings-menu {
             display: none; position: absolute; top: 50px; right: 20px;
             background: #181818; border: 1px solid #333; border-radius: 12px;
@@ -80,14 +76,18 @@
 
         .settings-menu label { font-size: 10px; color: var(--primary-color); font-weight: bold; display: block; margin-bottom: 8px; margin-top: 10px; }
 
-        .bg-list { max-height: 120px; overflow-y: auto; margin-bottom: 10px; border-bottom: 1px solid #333; }
-        .bg-item { font-size: 11px; padding: 6px; cursor: pointer; border-radius: 4px; color: #eee; }
-        .bg-item:hover { background: rgba(0, 255, 163, 0.1); color: var(--primary-color); }
+        /* Style cho bộ chọn Background < 1 > */
+        .bg-nav {
+            display: flex; align-items: center; justify-content: space-between;
+            background: #000; padding: 8px; border-radius: 8px; margin-bottom: 10px;
+            border: 1px solid #222;
+        }
+        .nav-arrow { cursor: pointer; color: var(--primary-color); font-weight: 800; padding: 0 10px; user-select: none; }
+        .nav-arrow:hover { transform: scale(1.2); }
+        .bg-display { font-size: 12px; color: #fff; font-family: monospace; }
 
         .avatar-container {
-            position: relative;
-            width: 140px; height: 140px;
-            margin: 0 auto 25px;
+            position: relative; width: 140px; height: 140px; margin: 0 auto 25px;
         }
 
         .avatar {
@@ -117,18 +117,12 @@
         .btn img { width: 22px; height: 22px; margin-right: 15px; object-fit: contain; }
         .btn:hover { transform: scale(1.05); background: rgba(255, 255, 255, 0.08); }
 
-        .c-input {
-            width: 100%; background: #000; border: 1px solid #333; color: #fff;
-            padding: 6px; font-size: 11px; border-radius: 4px; box-sizing: border-box;
-        }
-
         input[type="range"] { width: 100%; accent-color: var(--primary-color); cursor: pointer; }
 
-        /* Nút Tactical Neon tự động */
         .flash-trigger-btn {
             width: 100%; padding: 10px; border-radius: 8px; font-weight: 900;
             font-size: 11px; cursor: pointer; margin-top: 10px; border: none;
-            transition: all 0.5s ease; text-transform: uppercase; letter-spacing: 1px;
+            transition: all 0.5s ease; text-transform: uppercase;
         }
         .neon-white { background: #fff; color: #000; box-shadow: 0 0 15px #fff; }
         .neon-black { background: #000; color: #fff; box-shadow: 0 0 10px rgba(255,255,255,0.1); border: 1px solid #333; }
@@ -144,22 +138,15 @@
         <div class="menu-btn" onclick="toggleMenu()"><i class="fa-solid fa-bars"></i></div>
 
         <div class="settings-menu" id="sett">
-            <label>BACKGROUNDS</label>
-            <div class="bg-list">
-                <div class="bg-item" onclick="changeBG('https://i.makeagif.com/media/11-08-2022/lqsNsd.gif')">Lofi Girl (Default)</div>
-                <div class="bg-item" onclick="changeBG('https://i.imgur.com/lY7gDxp.gif')">Background 1</div>
-                <div class="bg-item" onclick="changeBG('https://i.pinimg.com/originals/85/c2/e3/85c2e3a5caec2fd8b7e6231473a84c81.gif')">City Night</div>
-                <div class="bg-item" onclick="changeBG('https://i.pinimg.com/originals/3e/3a/46/3e3a46dd7a519646ebae07af05a59e28.gif')">Anime Rain</div>
-                <div class="bg-item" onclick="changeBG('https://i.pinimg.com/originals/0b/d9/a2/0bd9a29a53ba553b2fc84e2e0402bb3f.gif')">Cyberpunk</div>
-                <div class="bg-item" onclick="changeBG('https://i.pinimg.com/originals/e2/cd/93/e2cd93d04934361e8b45edf807b36f6f.gif')">Train Window</div>
-                <div class="bg-item" onclick="changeBG('https://i.pinimg.com/originals/4a/ea/62/4aea62bee5039a1da9a1a83b4c460cb7.gif')">Room View</div>
-                <div class="bg-item" onclick="changeBG('https://i.pinimg.com/originals/71/c6/13/71c613b2136a094d6bb228dbfb01c9e7.gif')">Starry Sky</div>
+            <label>CHOOSE BACKGROUND</label>
+            <div class="bg-nav">
+                <span class="nav-arrow" onclick="prevBG()">&lt;</span>
+                <span class="bg-display" id="bg-num">1 / 8</span>
+                <span class="nav-arrow" onclick="nextBG()">&gt;</span>
             </div>
-            <input type="text" class="c-input" placeholder="Custom BG URL..." onchange="changeBG(this.value)">
             
-            <label>AUDIO SETTINGS</label>
+            <label>VOLUME CONTROL</label>
             <input type="range" min="0" max="100" value="50" oninput="setVol(this.value)">
-            <input type="text" class="c-input" placeholder="Custom Music URL..." onchange="changeMusic(this.value)" style="margin-top:8px;">
 
             <label>TACTICAL</label>
             <button id="flash-btn" class="flash-trigger-btn" onclick="flash()">DO NOT CLICK</button>
@@ -177,24 +164,21 @@
                 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAMAAABF0y+mAAAASFBMVEVHcExYZPFXZPJXZPFXZPFXZPFXZPFXZPFYZPJYZfJYZPJXZfFWY/JhbfNsd/OSmvbS1fv////x8/6pr/hQXvLl5/2Bi/XAxfpYg8U1AAAADHRSTlMADzmFwOT8YtP/sloPkm6kAAABAklEQVR4AYWTBbLFIAxFcXs4lf3vFEg1X2+9JzITIZco40IqJQVnlGBRbewtoxFmziI59rCPRGhIfn5hiLKDYSkJkemZz98689IB9YlCjPMlxnBgr4ejgTebcqltqJacLFBDCQPHJZWX0gIOjHB4Lusbrgu4ciKQI3IVRALMGGaAkqgZNdQRK4U8foc0MtQw46oDbmC9pBkQomwHlBPOlOsW9lL2sK1XUknETNnKpNOl5slKm1AQfsFaxw2eF+RQBB9HwLq3PedxG3CPMyc7yufDqF6b5Q2+jfoFf5SPaH/WPXhQuCqvn5bNVqEXR1GzkST7e0wwxeyX0fSO/T/Uf65DBzQNHUMopTvLAAAAAElFTkSuQmCC" alt="Icon">
                 Discord Server
             </a>
-
             <a href="https://jnkie.com/overview/monodistx10" target="_blank" class="btn">
                 <img src="https://jnkie.com/favicon.ico" alt="Icon">
                 Junkie Development
             </a>
-
             <a href="https://scriptblox.com/u/Unlikely_human" target="_blank" class="btn">
                 <img src="https://scriptblox.com/favicon.ico" alt="Icon">
                 Scriptblox Profile
             </a>
-
             <a href="https://www.roblox.com/users/5537576674/profile" target="_blank" class="btn">
                 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAM1BMVEVHcEwiIiIiIiIiIiIEAwIWFRW4wsz9/f6Ah43r7vLa4OeotL9kaW1KTU+RoK3I0duaqbezsCU5AAAAA3RSTlMARtYz5Vu8AAAA7ElEQVR4AYXTRwLCMAxE0RCPFLlI8f1PiwtFpn52nkdPtu2yh6/tl7aHn122/TfYt/AnBwD6BcAHi0dvIB6tlAs55ADpcS+ZTrMCOVyRpaEFgG/To5RXEB9bunXCA+17eo4t84DMb7PiAXhsCSq5j9weRA7QfGIGATi5l/23oDKB9EOdQBZg4/BU6r8I556SA+AZQIQ8w/JL9hdoh5xFA9dcaxUPqHAe1Y7qqCzA5joWG9VADoDrLXuE5d8Uc+NIVkAIRcyRquTBNNAi/iOsYBgCabGBEDxYUVAxeQceAUQe/Ozvrff35v17+18B5OUXAh1fAAgAAAAASUVORK5CYII=" alt="Icon">
                 Roblox Profile
             </a>
         </div>
 
-        <div class="footer">Developed by myself • 2026</div>
+        <div class="footer">Developed by Tiến • 2026</div>
     </div>
 
     <audio id="mus" loop autoplay src="https://github.com/tienxida112-blip/Music-Hub-Document/raw/refs/heads/main/Sleeping%20City.mp3"></audio>
@@ -205,11 +189,36 @@
         const s = document.getElementById('snd');
         const o = document.getElementById('flash-overlay');
         const card = document.getElementById('card');
+        const bgs = [
+            'https://i.makeagif.com/media/11-08-2022/lqsNsd.gif',
+            'https://i.imgur.com/lY7gDxp.gif',
+            'https://i.pinimg.com/originals/85/c2/e3/85c2e3a5caec2fd8b7e6231473a84c81.gif',
+            'https://i.pinimg.com/originals/3e/3a/46/3e3a46dd7a519646ebae07af05a59e28.gif',
+            'https://i.pinimg.com/originals/0b/d9/a2/0bd9a29a53ba553b2fc84e2e0402bb3f.gif',
+            'https://i.pinimg.com/originals/e2/cd/93/e2cd93d04934361e8b45edf807b36f6f.gif',
+            'https://i.pinimg.com/originals/4a/ea/62/4aea62bee5039a1da9a1a83b4c460cb7.gif',
+            'https://i.pinimg.com/originals/71/c6/13/71c613b2136a094d6bb228dbfb01c9e7.gif'
+        ];
+        let curBg = 0;
 
         function toggleMenu() { document.getElementById('sett').classList.toggle('active'); }
-        function changeBG(u) { if(u) document.body.style.backgroundImage = `url('${u}')`; }
+        
+        function updateBG() { 
+            document.body.style.backgroundImage = `url('${bgs[curBg]}')`; 
+            document.getElementById('bg-num').innerText = `${curBg + 1} / ${bgs.length}`;
+        }
+        function nextBG() { curBg = (curBg + 1) % bgs.length; updateBG(); }
+        function prevBG() { curBg = (curBg - 1 + bgs.length) % bgs.length; updateBG(); }
+
         function setVol(v) { m.volume = v / 100; }
-        function changeMusic(u) { if(u) { m.src = u; m.play(); } }
+
+        // Logic skip 5 giây cuối của nhạc
+        m.ontimeupdate = function() {
+            if (m.duration > 0 && (m.duration - m.currentTime) < 5) {
+                m.currentTime = 0; // Quay lại từ đầu
+                m.play();
+            }
+        };
 
         function checkTime() {
             const h = new Date().getHours();
@@ -227,7 +236,6 @@
             s.currentTime = 0; s.play();
             card.classList.add('shake-it');
             setTimeout(() => card.classList.remove('shake-it'), 500);
-            
             o.style.transition = 'none';
             o.style.opacity = '1';
             setTimeout(() => {
