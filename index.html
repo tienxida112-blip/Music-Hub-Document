@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChangBellWeMienStay | Profile</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #00ffa3; 
+            --bg-color: #050505;
+            --card-bg: #111111;
+            --text-gray: #b0b0b0;
+        }
+
+        /* Animation Rung Card khi nổ Flashbang */
+        @keyframes shake {
+            0% { transform: translate(1px, 1px) rotate(0deg); }
+            10% { transform: translate(-1px, -2px) rotate(-1deg); }
+            20% { transform: translate(-3px, 0px) rotate(1deg); }
+            30% { transform: translate(3px, 2px) rotate(0deg); }
+            40% { transform: translate(1px, -1px) rotate(1deg); }
+            50% { transform: translate(-1px, 2px) rotate(-1deg); }
+            100% { transform: translate(0, 0) rotate(0deg); }
+        }
+        .shake-it { animation: shake 0.5s ease-in-out; }
+
+        body {
+            background: url('https://i.makeagif.com/media/11-08-2022/lqsNsd.gif') no-repeat center center fixed;
+            background-size: cover;
+            color: white;
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            transition: background 0.8s ease-in-out;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* Lớp phủ Flashbang */
+        #flash-overlay {
+            position: fixed; inset: 0; background: white; opacity: 0;
+            pointer-events: none; z-index: 9999;
+        }
+
+        .profile-card {
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 28px;
+            text-align: center;
+            width: 340px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 1);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Nút 3 gạch */
+        .menu-btn {
+            position: absolute; top: 20px; right: 20px;
+            cursor: pointer; color: var(--text-gray);
+            font-size: 18px; transition: 0.3s;
+        }
+        .menu-btn:hover { color: var(--primary-color); transform: rotate(90deg); }
+
+        /* Menu Settings */
+        .settings-menu {
+            display: none; position: absolute; top: 50px; right: 20px;
+            background: #181818; border: 1px solid #333; border-radius: 12px;
+            padding: 15px; width: 220px; text-align: left; z-index: 100;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        .settings-menu.active { display: block; animation: fadeIn 0.3s ease; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .settings-menu label { font-size: 10px; color: var(--primary-color); font-weight: bold; display: block; margin-bottom: 8px; margin-top: 10px; }
+
+        .bg-list { max-height: 120px; overflow-y: auto; margin-bottom: 10px; border-bottom: 1px solid #333; }
+        .bg-item { font-size: 11px; padding: 6px; cursor: pointer; border-radius: 4px; color: #eee; }
+        .bg-item:hover { background: rgba(0, 255, 163, 0.1); color: var(--primary-color); }
+
+        .avatar-container {
+            position: relative;
+            width: 140px; height: 140px;
+            margin: 0 auto 25px;
+        }
+
+        .avatar {
+            width: 100%; height: 100%; border-radius: 50%;
+            border: 3px solid var(--primary-color);
+            box-shadow: 0 0 30px rgba(0, 255, 163, 0.4);
+            object-fit: cover;
+        }
+
+        h1 {
+            margin: 10px 0 5px; font-size: 24px; font-weight: 800;
+            background: linear-gradient(to right, #fff, var(--primary-color));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+
+        .tagline { color: var(--text-gray); font-size: 14px; margin-bottom: 35px; text-transform: uppercase; letter-spacing: 2px; font-weight: 600; }
+
+        .links-group { display: flex; flex-direction: column; gap: 16px; }
+
+        .btn {
+            position: relative; padding: 14px 20px; border-radius: 14px;
+            text-decoration: none; color: white; font-weight: 600; font-size: 15px;
+            transition: 0.3s all ease; display: flex; align-items: center;
+            background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .btn img { width: 22px; height: 22px; margin-right: 15px; object-fit: contain; }
+        .btn:hover { transform: scale(1.05); background: rgba(255, 255, 255, 0.08); }
+
+        .c-input {
+            width: 100%; background: #000; border: 1px solid #333; color: #fff;
+            padding: 6px; font-size: 11px; border-radius: 4px; box-sizing: border-box;
+        }
+
+        input[type="range"] { width: 100%; accent-color: var(--primary-color); cursor: pointer; }
+
+        /* Nút Tactical Neon tự động */
+        .flash-trigger-btn {
+            width: 100%; padding: 10px; border-radius: 8px; font-weight: 900;
+            font-size: 11px; cursor: pointer; margin-top: 10px; border: none;
+            transition: all 0.5s ease; text-transform: uppercase; letter-spacing: 1px;
+        }
+        .neon-white { background: #fff; color: #000; box-shadow: 0 0 15px #fff; }
+        .neon-black { background: #000; color: #fff; box-shadow: 0 0 10px rgba(255,255,255,0.1); border: 1px solid #333; }
+
+        .footer { margin-top: 40px; font-size: 10px; color: #444; letter-spacing: 1px; text-transform: uppercase; }
+    </style>
+</head>
+<body>
+
+    <div id="flash-overlay"></div>
+
+    <div class="profile-card" id="card">
+        <div class="menu-btn" onclick="toggleMenu()"><i class="fa-solid fa-bars"></i></div>
+
+        <div class="settings-menu" id="sett">
+            <label>BACKGROUNDS</label>
+            <div class="bg-list">
+                <div class="bg-item" onclick="changeBG('https://i.makeagif.com/media/11-08-2022/lqsNsd.gif')">Lofi Girl (Default)</div>
+                <div class="bg-item" onclick="changeBG('https://i.imgur.com/lY7gDxp.gif')">Background 1</div>
+                <div class="bg-item" onclick="changeBG('https://i.pinimg.com/originals/85/c2/e3/85c2e3a5caec2fd8b7e6231473a84c81.gif')">City Night</div>
+                <div class="bg-item" onclick="changeBG('https://i.pinimg.com/originals/3e/3a/46/3e3a46dd7a519646ebae07af05a59e28.gif')">Anime Rain</div>
+                <div class="bg-item" onclick="changeBG('https://i.pinimg.com/originals/0b/d9/a2/0bd9a29a53ba553b2fc84e2e0402bb3f.gif')">Cyberpunk</div>
+                <div class="bg-item" onclick="changeBG('https://i.pinimg.com/originals/e2/cd/93/e2cd93d04934361e8b45edf807b36f6f.gif')">Train Window</div>
+                <div class="bg-item" onclick="changeBG('https://i.pinimg.com/originals/4a/ea/62/4aea62bee5039a1da9a1a83b4c460cb7.gif')">Room View</div>
+                <div class="bg-item" onclick="changeBG('https://i.pinimg.com/originals/71/c6/13/71c613b2136a094d6bb228dbfb01c9e7.gif')">Starry Sky</div>
+            </div>
+            <input type="text" class="c-input" placeholder="Custom BG URL..." onchange="changeBG(this.value)">
+            
+            <label>AUDIO SETTINGS</label>
+            <input type="range" min="0" max="100" value="50" oninput="setVol(this.value)">
+            <input type="text" class="c-input" placeholder="Custom Music URL..." onchange="changeMusic(this.value)" style="margin-top:8px;">
+
+            <label>TACTICAL</label>
+            <button id="flash-btn" class="flash-trigger-btn" onclick="flash()">DO NOT CLICK</button>
+        </div>
+
+        <div class="avatar-container">
+            <img class="avatar" src="https://p9-sign-sg.tiktokcdn.com/tos-alisg-avt-0068/f6782c8e0e4a60a94a4c181324633303~tplv-tiktokx-cropcenter:1080:1080.jpeg?dr=14579&refresh_token=3bf59d88&x-expires=1776070800&x-signature=D3EZH0Ax%2BNr9QFTxRzp%2B1Ie5vaI%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=sg1" alt="Avatar">
+        </div>
+        
+        <h1>ChangBellWeMienStay</h1>
+        <div class="tagline">Developer</div>
+
+        <div class="links-group">
+            <a href="https://discord.gg/WW3f7Nmd" target="_blank" class="btn">
+                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAMAAABF0y+mAAAASFBMVEVHcExYZPFXZPJXZPFXZPFXZPFXZPFXZPFYZPJYZfJYZPJXZfFWY/JhbfNsd/OSmvbS1fv////x8/6pr/hQXvLl5/2Bi/XAxfpYg8U1AAAADHRSTlMADzmFwOT8YtP/sloPkm6kAAABAklEQVR4AYWTBbLFIAxFcXs4lf3vFEg1X2+9JzITIZco40IqJQVnlGBRbewtoxFmziI59rCPRGhIfn5hiLKDYSkJkemZz98689IB9YlCjPMlxnBgr4ejgTebcqltqJacLFBDCQPHJZWX0gIOjHB4Lusbrgu4ciKQI3IVRALMGGaAkqgZNdQRK4U8foc0MtQw46oDbmC9pBkQomwHlBPOlOsW9lL2sK1XUknETNnKpNOl5slKm1AQfsFaxw2eF+RQBB9HwLq3PedxG3CPMyc7yufDqF6b5Q2+jfoFf5SPaH/WPXhQuCqvn5bNVqEXR1GzkST7e0wwxeyX0fSO/T/Uf65DBzQNHUMopTvLAAAAAElFTkSuQmCC" alt="Icon">
+                Discord Server
+            </a>
+
+            <a href="https://jnkie.com/overview/monodistx10" target="_blank" class="btn">
+                <img src="https://jnkie.com/favicon.ico" alt="Icon">
+                Junkie Development
+            </a>
+
+            <a href="https://scriptblox.com/u/Unlikely_human" target="_blank" class="btn">
+                <img src="https://scriptblox.com/favicon.ico" alt="Icon">
+                Scriptblox Profile
+            </a>
+
+            <a href="https://www.roblox.com/users/5537576674/profile" target="_blank" class="btn">
+                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAM1BMVEVHcEwiIiIiIiIiIiIEAwIWFRW4wsz9/f6Ah43r7vLa4OeotL9kaW1KTU+RoK3I0duaqbezsCU5AAAAA3RSTlMARtYz5Vu8AAAA7ElEQVR4AYXTRwLCMAxE0RCPFLlI8f1PiwtFpn52nkdPtu2yh6/tl7aHn122/TfYt/AnBwD6BcAHi0dvIB6tlAs55ADpcS+ZTrMCOVyRpaEFgG/To5RXEB9bunXCA+17eo4t84DMb7PiAXhsCSq5j9weRA7QfGIGATi5l/23oDKB9EOdQBZg4/BU6r8I556SA+AZQIQ8w/JL9hdoh5xFA9dcaxUPqHAe1Y7qqCzA5joWG9VADoDrLXuE5d8Uc+NIVkAIRcyRquTBNNAi/iOsYBgCabGBEDxYUVAxeQceAUQe/Ozvrff35v17+18B5OUXAh1fAAgAAAAASUVORK5CYII=" alt="Icon">
+                Roblox Profile
+            </a>
+        </div>
+
+        <div class="footer">Developed by myself • 2026</div>
+    </div>
+
+    <audio id="mus" loop autoplay src="https://github.com/tienxida112-blip/Music-Hub-Document/raw/refs/heads/main/Sleeping%20City.mp3"></audio>
+    <audio id="snd" src="https://github.com/tienxida112-blip/Music-Hub-Document/raw/refs/heads/main/flashbang-cs_qoRhxLn.mp3"></audio>
+
+    <script>
+        const m = document.getElementById('mus');
+        const s = document.getElementById('snd');
+        const o = document.getElementById('flash-overlay');
+        const card = document.getElementById('card');
+
+        function toggleMenu() { document.getElementById('sett').classList.toggle('active'); }
+        function changeBG(u) { if(u) document.body.style.backgroundImage = `url('${u}')`; }
+        function setVol(v) { m.volume = v / 100; }
+        function changeMusic(u) { if(u) { m.src = u; m.play(); } }
+
+        function checkTime() {
+            const h = new Date().getHours();
+            const btn = document.getElementById('flash-btn');
+            if (h >= 0 && h < 3) {
+                btn.innerText = "CLICK";
+                btn.className = "flash-trigger-btn neon-white";
+            } else {
+                btn.innerText = "DO NOT CLICK";
+                btn.className = "flash-trigger-btn neon-black";
+            }
+        }
+
+        function flash() {
+            s.currentTime = 0; s.play();
+            card.classList.add('shake-it');
+            setTimeout(() => card.classList.remove('shake-it'), 500);
+            
+            o.style.transition = 'none';
+            o.style.opacity = '1';
+            setTimeout(() => {
+                o.style.transition = 'opacity 15s ease-out';
+                o.style.opacity = '0';
+            }, 150);
+        }
+
+        setInterval(checkTime, 1000);
+        checkTime();
+        window.onclick = () => { if(m.paused) m.play(); };
+    </script>
+</body>
+</html>
