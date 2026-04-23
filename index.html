@@ -91,9 +91,10 @@
         h2 { margin: 30px 0 15px; color: white; font-size: 1.5rem; }
         p { line-height: 1.8; margin-bottom: 20px; color: var(--text-main); font-size: 16px; }
 
+        /* --- CODE BOX & LUAU BADGE --- */
         .code-box {
             background: #000;
-            padding: 20px;
+            padding: 25px 20px 20px;
             border-radius: 10px;
             border: 1px solid var(--border);
             position: relative;
@@ -101,6 +102,68 @@
             font-family: 'Consolas', monospace;
             color: #79c0ff;
             word-break: break-all;
+        }
+
+        .luau-badge {
+            position: absolute;
+            top: -12px;
+            right: 15px;
+            background: #0099ff;
+            color: white;
+            font-size: 11px;
+            padding: 4px 10px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 600;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        .luau-badge img {
+            width: 14px;
+            height: 14px;
+            display: block;
+        }
+
+        /* --- FAQ ACCORDION --- */
+        details {
+            background: var(--bg-side);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            margin-bottom: 10px;
+            overflow: hidden;
+            transition: 0.3s;
+        }
+
+        summary {
+            padding: 15px;
+            cursor: pointer;
+            font-weight: 600;
+            color: white;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        summary::after {
+            content: '\f078';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            font-size: 12px;
+            transition: 0.3s;
+        }
+
+        details[open] summary::after { transform: rotate(180deg); }
+        details[open] { border-color: var(--accent); }
+
+        .faq-answer {
+            padding: 15px;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+            line-height: 1.6;
+            background: rgba(0,0,0,0.1);
         }
 
         /* --- NAV CONTROLS --- */
@@ -180,8 +243,8 @@
 
         <div class="page">
             <h1>Information</h1>
-            <p>For full details about the project and real-time updates, you can view the official document here:</p>
-            <a href="https://tienxida112-blip.github.io/Music-Hub-Document/" target="_blank">View Music-Hub-Document</a>
+            <p>For full details about me, you can view my profile here:</p>
+            <a href="https://tienxida112-blip.github.io/My-Profile/" target="_blank">View My Profile</a>
         </div>
 
         <div class="page">
@@ -192,7 +255,7 @@
                 <li><a href="https://weao.gg/" target="_blank">What Exploit Are Online (WEAO)</a></li>
                 <li><a href="https://executors.samrat.lol/" target="_blank">SAMRAT</a></li>
             </ul>
-            <h2>Tested With</h2>
+            <h2>Tested And Working With:</h2>
             <ul>
                 <li><a href="https://spdmteam.com/index" target="_blank">Arceus X</a></li>
                 <li><a href="https://work.ink/2nLR/madium-install" target="_blank">Madium</a></li>
@@ -205,6 +268,10 @@
         <div class="page">
             <h1>Main Script</h1>
             <div class="code-box">
+                <span class="luau-badge">
+                    <img src="https://raw.githubusercontent.com/Roblox/luau/master/logo.png" alt="Luau">
+                    <span>Luau Code</span>
+                </span>
                 <code>loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Loader-194050"))()</code>
             </div>
             <p><i class="fas fa-book-reader"></i> <b>Read:</b> Some Dropbox links have been taken down, so some music tracks might not work currently.</p>
@@ -220,8 +287,27 @@
 
         <div class="page">
             <h1>FAQ</h1>
-            <p><b>Q: Is this script free?</b><br>A: Yes, it is completely free to use.</p>
-            <p><b>Q: Where can I get support?</b><br>A: Join our Discord server for help and bug reports.</p>
+            
+            <details>
+                <summary>Is this script free?</summary>
+                <div class="faq-answer">
+                    Yes, Music Hub is and will always be completely free to use.
+                </div>
+            </details>
+
+            <details>
+                <summary>Where can I get support?</summary>
+                <div class="faq-answer">
+                    You can join our Discord server (link in sidebar) to get help from the community and report bugs.
+                </div>
+            </details>
+
+            <details>
+                <summary>Why is the music not playing?</summary>
+                <div class="faq-answer">
+                    Some audio IDs might be deleted by Roblox or the Dropbox source links might be dead. We are working on a fix.
+                </div>
+            </details>
         </div>
 
         <div class="nav-controls">
