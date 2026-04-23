@@ -104,7 +104,7 @@
             transition: 0.3s;
         }
 
-        .luau-badge {
+        .box-label {
             position: absolute;
             top: 10px;
             left: 15px;
@@ -115,8 +115,7 @@
             color: var(--text-muted);
             font-weight: 600;
         }
-
-        .luau-badge img { width: 14px; height: 14px; }
+        .box-label img { width: 14px; height: 14px; }
 
         .copy-btn {
             position: absolute;
@@ -127,7 +126,7 @@
             color: var(--text-muted);
             cursor: pointer;
             font-size: 16px;
-            opacity: 0; /* Hiện khi hover */
+            opacity: 0; 
             transition: 0.2s;
         }
 
@@ -173,12 +172,15 @@
             <button class="nav-item" onclick="showPage(3)">
                 <i class="fas fa-code"></i> Script
             </button>
+            <button class="nav-item" onclick="showPage(4)">
+                <i class="fas fa-key"></i> Key
+            </button>
 
             <div class="section-title">Other</div>
-            <button class="nav-item" onclick="showPage(4)">
+            <button class="nav-item" onclick="showPage(5)">
                 <i class="fas fa-user-tag"></i> Credits
             </button>
-            <button class="nav-item" onclick="showPage(5)">
+            <button class="nav-item" onclick="showPage(6)">
                 <i class="fas fa-question-circle"></i> FAQ
             </button>
         </div>
@@ -221,16 +223,31 @@
         <div class="page">
             <h1>Script</h1>
             <div class="code-box">
-                <div class="luau-badge">
+                <div class="box-label">
                     <img src="https://raw.githubusercontent.com/Roblox/luau/master/logo.png" alt="Luau">
                     <span>Luau Code</span>
                 </div>
-                <button class="copy-btn" onclick="copyCode(this)">
+                <button class="copy-btn" onclick="copyContent('scriptCode', this)">
                     <i class="far fa-copy"></i>
                 </button>
                 <code id="scriptCode">loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Loader-194050"))()</code>
             </div>
             <p><i class="fas fa-book-reader"></i> <b>Read:</b> Some Dropbox links have been taken down, so some music tracks might not work currently.</p>
+        </div>
+
+        <div class="page">
+            <h1>Key</h1>
+            <p>Copy the link below and paste it into your browser to get the key:</p>
+            <div class="code-box">
+                <div class="box-label">
+                    <i class="fas fa-link"></i>
+                    <span>Key Link</span>
+                </div>
+                <button class="copy-btn" onclick="copyContent('keyLink', this)">
+                    <i class="far fa-copy"></i>
+                </button>
+                <code id="keyLink">https://jnkie.com/overview/monodistx10</code>
+            </div>
         </div>
 
         <div class="page">
@@ -288,9 +305,9 @@
             if (newPage >= 0 && newPage < pages.length) showPage(newPage);
         }
 
-        function copyCode(btn) {
-            const code = document.getElementById('scriptCode').innerText;
-            navigator.clipboard.writeText(code).then(() => {
+        function copyContent(id, btn) {
+            const text = document.getElementById(id).innerText;
+            navigator.clipboard.writeText(text).then(() => {
                 const icon = btn.querySelector('i');
                 icon.className = 'fas fa-check';
                 btn.classList.add('copied');
