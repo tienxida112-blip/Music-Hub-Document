@@ -81,7 +81,6 @@
 
         /* --- MAIN CONTENT --- */
         main { margin-left: var(--sidebar-width); flex: 1; padding: 60px; max-width: 1000px; }
-
         .page { display: none; animation: fadeIn 0.4s ease; }
         .page.active { display: block; }
 
@@ -91,10 +90,10 @@
         h2 { margin: 30px 0 15px; color: white; font-size: 1.5rem; }
         p { line-height: 1.8; margin-bottom: 20px; color: var(--text-main); font-size: 16px; }
 
-        /* --- CODE BOX & LUAU BADGE --- */
+        /* --- CODE BOX & COPY BUTTON --- */
         .code-box {
             background: #000;
-            padding: 25px 20px 20px;
+            padding: 35px 20px 20px;
             border-radius: 10px;
             border: 1px solid var(--border);
             position: relative;
@@ -102,102 +101,56 @@
             font-family: 'Consolas', monospace;
             color: #79c0ff;
             word-break: break-all;
+            transition: 0.3s;
         }
 
         .luau-badge {
             position: absolute;
-            top: -12px;
-            right: 15px;
-            background: #0099ff;
-            color: white;
-            font-size: 11px;
-            padding: 4px 10px;
-            border-radius: 6px;
+            top: 10px;
+            left: 15px;
             display: flex;
             align-items: center;
             gap: 6px;
-            font-weight: 600;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-        }
-
-        .luau-badge img {
-            width: 14px;
-            height: 14px;
-            display: block;
-        }
-
-        /* --- FAQ ACCORDION --- */
-        details {
-            background: var(--bg-side);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            margin-bottom: 10px;
-            overflow: hidden;
-            transition: 0.3s;
-        }
-
-        summary {
-            padding: 15px;
-            cursor: pointer;
-            font-weight: 600;
-            color: white;
-            list-style: none;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        summary::after {
-            content: '\f078';
-            font-family: 'Font Awesome 6 Free';
-            font-weight: 900;
             font-size: 12px;
-            transition: 0.3s;
-        }
-
-        details[open] summary::after { transform: rotate(180deg); }
-        details[open] { border-color: var(--accent); }
-
-        .faq-answer {
-            padding: 15px;
-            border-top: 1px solid var(--border);
             color: var(--text-muted);
-            line-height: 1.6;
-            background: rgba(0,0,0,0.1);
+            font-weight: 600;
         }
 
-        /* --- NAV CONTROLS --- */
-        .nav-controls {
-            margin-top: 60px;
-            padding-top: 30px;
-            border-top: 1px solid var(--border);
-            display: flex;
-            justify-content: space-between;
-        }
+        .luau-badge img { width: 14px; height: 14px; }
 
-        .nav-btn {
-            padding: 12px 24px;
-            background: var(--bg-side);
-            border: 1px solid var(--border);
-            color: var(--text-main);
-            border-radius: 8px;
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
             cursor: pointer;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            transition: 0.3s;
+            font-size: 16px;
+            opacity: 0; /* Hiện khi hover */
+            transition: 0.2s;
         }
 
-        .nav-btn:hover:not(.disabled) { border-color: var(--accent); color: white; }
+        .code-box:hover .copy-btn { opacity: 1; }
+        .copy-btn:hover { color: white; }
+        .copy-btn.copied { color: #3fb950 !important; opacity: 1; }
+
+        /* --- FAQ --- */
+        details { background: var(--bg-side); border: 1px solid var(--border); border-radius: 8px; margin-bottom: 10px; overflow: hidden; }
+        summary { padding: 15px; cursor: pointer; font-weight: 600; color: white; list-style: none; display: flex; justify-content: space-between; align-items: center; }
+        summary::after { content: '\f078'; font-family: 'Font Awesome 6 Free'; font-weight: 900; font-size: 12px; transition: 0.3s; }
+        details[open] summary::after { transform: rotate(180deg); }
+        .faq-answer { padding: 15px; border-top: 1px solid var(--border); color: var(--text-muted); line-height: 1.6; background: rgba(0,0,0,0.1); }
+
+        /* --- NAVIGATION --- */
+        .nav-controls { margin-top: 60px; padding-top: 30px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; }
+        .nav-btn { padding: 12px 24px; background: var(--bg-side); border: 1px solid var(--border); color: var(--text-main); border-radius: 8px; cursor: pointer; text-decoration: none; display: flex; align-items: center; gap: 10px; }
         .nav-btn.disabled { opacity: 0; pointer-events: none; }
 
         ul { list-style: none; margin-bottom: 20px; }
         li { margin-bottom: 12px; padding-left: 25px; position: relative; }
-        li::before { content: "•"; color: var(--accent); position: absolute; left: 0; font-weight: bold; }
-        
+        li::before { content: "•"; color: var(--accent); position: absolute; left: 0; }
         a { color: var(--accent); text-decoration: none; }
-        a:hover { text-decoration: underline; }
     </style>
 </head>
 <body>
@@ -218,8 +171,10 @@
                 <i class="fas fa-bolt"></i> Executor
             </button>
             <button class="nav-item" onclick="showPage(3)">
-                <i class="fas fa-code"></i> Main Script
+                <i class="fas fa-code"></i> Script
             </button>
+
+            <div class="section-title">Other</div>
             <button class="nav-item" onclick="showPage(4)">
                 <i class="fas fa-user-tag"></i> Credits
             </button>
@@ -250,7 +205,6 @@
         <div class="page">
             <h1>Executors</h1>
             <p>To use this script, we recommend using the following executors:</p>
-            <h2>Recommended Fast Executors</h2>
             <ul>
                 <li><a href="https://weao.gg/" target="_blank">What Exploit Are Online (WEAO)</a></li>
                 <li><a href="https://executors.samrat.lol/" target="_blank">SAMRAT</a></li>
@@ -262,17 +216,19 @@
                 <li><a href="https://wearedevs.net/d/Solara" target="_blank">Solara</a></li>
                 <li><a href="https://xeno.onl/method" target="_blank">Xeno</a></li>
             </ul>
-            <p style="color: #ffaa00;"><i class="fas fa-exclamation-triangle"></i> Careful when using <a href="https://realvelocity.xyz/" target="_blank" style="color: #ffaa00;">Velocity</a>.</p>
         </div>
 
         <div class="page">
-            <h1>Main Script</h1>
+            <h1>Script</h1>
             <div class="code-box">
-                <span class="luau-badge">
+                <div class="luau-badge">
                     <img src="https://raw.githubusercontent.com/Roblox/luau/master/logo.png" alt="Luau">
                     <span>Luau Code</span>
-                </span>
-                <code>loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Loader-194050"))()</code>
+                </div>
+                <button class="copy-btn" onclick="copyCode(this)">
+                    <i class="far fa-copy"></i>
+                </button>
+                <code id="scriptCode">loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Loader-194050"))()</code>
             </div>
             <p><i class="fas fa-book-reader"></i> <b>Read:</b> Some Dropbox links have been taken down, so some music tracks might not work currently.</p>
         </div>
@@ -287,26 +243,17 @@
 
         <div class="page">
             <h1>FAQ</h1>
-            
             <details>
                 <summary>Is this script free?</summary>
-                <div class="faq-answer">
-                    Yes, Music Hub is and will always be completely free to use.
-                </div>
+                <div class="faq-answer">Yes, Music Hub is completely free.</div>
             </details>
-
             <details>
                 <summary>Where can I get support?</summary>
-                <div class="faq-answer">
-                    You can join our Discord server (link in sidebar) to get help from the community and report bugs.
-                </div>
+                <div class="faq-answer">Join our Discord server in the sidebar.</div>
             </details>
-
             <details>
                 <summary>Why is the music not playing?</summary>
-                <div class="faq-answer">
-                    Some audio IDs might be deleted by Roblox or the Dropbox source links might be dead. We are working on a fix.
-                </div>
+                <div class="faq-answer">Some audio IDs or Dropbox links might be dead.</div>
             </details>
         </div>
 
@@ -331,7 +278,6 @@
             currentPage = index;
             pages[currentPage].classList.add('active');
             navItems[currentPage].classList.add('active');
-
             document.getElementById('prevBtn').classList.toggle('disabled', currentPage === 0);
             document.getElementById('nextBtn').classList.toggle('disabled', currentPage === pages.length - 1);
             window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -341,7 +287,20 @@
             let newPage = currentPage + step;
             if (newPage >= 0 && newPage < pages.length) showPage(newPage);
         }
-        showPage(0);
+
+        function copyCode(btn) {
+            const code = document.getElementById('scriptCode').innerText;
+            navigator.clipboard.writeText(code).then(() => {
+                const icon = btn.querySelector('i');
+                icon.className = 'fas fa-check';
+                btn.classList.add('copied');
+                
+                setTimeout(() => {
+                    icon.className = 'far fa-copy';
+                    btn.classList.remove('copied');
+                }, 2000);
+            });
+        }
     </script>
 </body>
 </html>
