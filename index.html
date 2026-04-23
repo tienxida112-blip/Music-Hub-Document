@@ -1,252 +1,193 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ChangBellWeMeanStay | Profile</title>
+    <title>Music Hub Document</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary-color: #00ffa3; 
-            --bg-color: #050505;
-            --card-bg: #111111;
-            --text-gray: #b0b0b0;
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --accent-color: #38bdf8;
+            --text-color: #f1f5f9;
+            --transition-speed: 0.4s;
         }
 
-        @keyframes shake {
-            0% { transform: translate(1px, 1px) rotate(0deg); }
-            10% { transform: translate(-1px, -2px) rotate(-1deg); }
-            20% { transform: translate(-3px, 0px) rotate(1deg); }
-            30% { transform: translate(3px, 2px) rotate(0deg); }
-            40% { transform: translate(1px, -1px) rotate(1deg); }
-            50% { transform: translate(-1px, 2px) rotate(-1deg); }
-            100% { transform: translate(0, 0) rotate(0deg); }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        .shake-it { animation: shake 0.5s ease-in-out; }
 
         body {
-            background: url('https://i.makeagif.com/media/11-08-2022/lqsNsd.gif') no-repeat center center fixed;
-            background-size: cover;
-            color: white;
-            font-family: 'Inter', 'Segoe UI', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            margin: 0;
             overflow: hidden;
-            transition: background 0.8s ease-in-out;
-            -webkit-tap-highlight-color: transparent;
         }
 
-        #flash-overlay {
-            position: fixed; inset: 0; background: white; opacity: 0;
-            pointer-events: none; z-index: 9999;
-        }
-
-        .profile-card {
+        .container {
+            width: 90%;
+            max-width: 800px;
             background: var(--card-bg);
-            padding: 40px;
-            border-radius: 28px;
-            text-align: center;
-            width: 340px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 1);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
-            z-index: 1;
-        }
-
-        .menu-btn {
-            position: absolute; top: 20px; right: 20px;
-            cursor: pointer; color: var(--text-gray);
-            font-size: 18px; transition: 0.3s;
-        }
-        .menu-btn:hover { color: var(--primary-color); transform: rotate(90deg); }
-
-        .settings-menu {
-            display: none; position: absolute; top: 50px; right: 20px;
-            background: #181818; border: 1px solid #333; border-radius: 12px;
-            padding: 15px; width: 220px; text-align: left; z-index: 100;
+            border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-        .settings-menu.active { display: block; animation: fadeIn 0.3s ease; }
-
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
-
-        .settings-menu label { font-size: 10px; color: var(--primary-color); font-weight: bold; display: block; margin-bottom: 8px; margin-top: 10px; }
-
-        /* Style cho bộ chọn Background < 1 > */
-        .bg-nav {
-            display: flex; align-items: center; justify-content: space-between;
-            background: #000; padding: 8px; border-radius: 8px; margin-bottom: 10px;
-            border: 1px solid #222;
-        }
-        .nav-arrow { cursor: pointer; color: var(--primary-color); font-weight: 800; padding: 0 10px; user-select: none; }
-        .nav-arrow:hover { transform: scale(1.2); }
-        .bg-display { font-size: 12px; color: #fff; font-family: monospace; }
-
-        .avatar-container {
-            position: relative; width: 140px; height: 140px; margin: 0 auto 25px;
+            padding: 30px;
+            position: relative;
+            min-height: 500px;
         }
 
-        .avatar {
-            width: 100%; height: 100%; border-radius: 50%;
-            border: 3px solid var(--primary-color);
-            box-shadow: 0 0 30px rgba(0, 255, 163, 0.4);
-            object-fit: cover;
+        /* Menu điều hướng */
+        nav {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            border-bottom: 1px solid #334155;
+            padding-bottom: 15px;
         }
 
-        h1 {
-            margin: 10px 0 5px; font-size: 24px; font-weight: 800;
-            background: linear-gradient(to right, #fff, var(--primary-color));
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        nav button {
+            background: transparent;
+            border: none;
+            color: #94a3b8;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            padding: 8px 16px;
+            transition: all 0.3s;
+            border-radius: 8px;
         }
 
-        .tagline { color: var(--text-gray); font-size: 14px; margin-bottom: 35px; text-transform: uppercase; letter-spacing: 2px; font-weight: 600; }
-
-        .links-group { display: flex; flex-direction: column; gap: 16px; }
-
-        .btn {
-            position: relative; padding: 14px 20px; border-radius: 14px;
-            text-decoration: none; color: white; font-weight: 600; font-size: 15px;
-            transition: 0.3s all ease; display: flex; align-items: center;
-            background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08);
+        nav button.active {
+            color: var(--accent-color);
+            background: rgba(56, 189, 248, 0.1);
         }
 
-        .btn img { width: 22px; height: 22px; margin-right: 15px; object-fit: contain; }
-        .btn:hover { transform: scale(1.05); background: rgba(255, 255, 255, 0.08); }
-
-        input[type="range"] { width: 100%; accent-color: var(--primary-color); cursor: pointer; }
-
-        .flash-trigger-btn {
-            width: 100%; padding: 10px; border-radius: 8px; font-weight: 900;
-            font-size: 11px; cursor: pointer; margin-top: 10px; border: none;
-            transition: all 0.5s ease; text-transform: uppercase;
+        /* Hiệu ứng chuyển trang */
+        .page {
+            display: none;
+            animation: fadeIn var(--transition-speed) ease-in-out;
         }
-        .neon-white { background: #fff; color: #000; box-shadow: 0 0 15px #fff; }
-        .neon-black { background: #000; color: #fff; box-shadow: 0 0 10px rgba(255,255,255,0.1); border: 1px solid #333; }
 
-        .footer { margin-top: 40px; font-size: 10px; color: #444; letter-spacing: 1px; text-transform: uppercase; }
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Nội dung */
+        h1 { color: var(--accent-color); margin-bottom: 15px; }
+        p { line-height: 1.6; margin-bottom: 15px; color: #cbd5e1; }
+
+        .code-box {
+            background: #000;
+            padding: 15px;
+            border-radius: 8px;
+            position: relative;
+            margin: 20px 0;
+            font-family: 'Courier New', Courier, monospace;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--accent-color);
+            border: none;
+            padding: 5px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        ul { list-style: none; }
+        li { margin-bottom: 10px; }
+        a { color: var(--accent-color); text-decoration: none; transition: 0.3s; }
+        a:hover { text-decoration: underline; opacity: 0.8; }
+
+        .warning {
+            background: rgba(239, 68, 68, 0.1);
+            border-left: 4px solid #ef4444;
+            padding: 15px;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
 
-    <div id="flash-overlay"></div>
+<div class="container">
+    <nav>
+        <button onclick="showPage('home')" id="btn-home" class="active">Home</button>
+        <button onclick="showPage('executors')" id="btn-executors">Executors</button>
+        <button onclick="showPage('about')" id="btn-about">About</button>
+    </nav>
 
-    <div class="profile-card" id="card">
-        <div class="menu-btn" onclick="toggleMenu()"><i class="fa-solid fa-bars"></i></div>
-
-        <div class="settings-menu" id="sett">
-            <label>CHOOSE BACKGROUND</label>
-            <div class="bg-nav">
-                <span class="nav-arrow" onclick="prevBG()">&lt;</span>
-                <span class="bg-display" id="bg-num">1 / 8</span>
-                <span class="nav-arrow" onclick="nextBG()">&gt;</span>
-            </div>
-            
-            <label>VOLUME CONTROL</label>
-            <input type="range" min="0" max="100" value="50" oninput="setVol(this.value)">
-
-            <label>TACTICAL</label>
-            <button id="flash-btn" class="flash-trigger-btn" onclick="flash()">DO NOT CLICK</button>
-        </div>
-
-        <div class="avatar-container">
-            <img class="avatar" src="https://raw.githubusercontent.com/tienxida112-blip/Music-Hub-Document/refs/heads/main/images%20(77).jpeg" alt="Avatar">
-        </div>
+    <div id="home" class="page active">
+        <h1><i class="fas fa-music"></i> Music Hub</h1>
+        <p>A special script for Roblox that allows you to play your favorite music in-game seamlessly.</p>
         
-        <h1>ChangBellWeMeanStay</h1>
-        <div class="tagline">Developer</div>
-
-        <div class="links-group">
-            <a href="https://discord.gg/WW3f7Nmd" target="_blank" class="btn">
-                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAMAAABF0y+mAAAASFBMVEVHcExYZPFXZPJXZPFXZPFXZPFXZPFXZPFYZPJYZfJYZPJXZfFWY/JhbfNsd/OSmvbS1fv////x8/6pr/hQXvLl5/2Bi/XAxfpYg8U1AAAADHRSTlMADzmFwOT8YtP/sloPkm6kAAABAklEQVR4AYWTBbLFIAxFcXs4lf3vFEg1X2+9JzITIZco40IqJQVnlGBRbewtoxFmziI59rCPRGhIfn5hiLKDYSkJkemZz98689IB9YlCjPMlxnBgr4ejgTebcqltqJacLFBDCQPHJZWX0gIOjHB4Lusbrgu4ciKQI3IVRALMGGaAkqgZNdQRK4U8foc0MtQw46oDbmC9pBkQomwHlBPOlOsW9lL2sK1XUknETNnKpNOl5slKm1AQfsFaxw2eF+RQBB9HwLq3PedxG3CPMyc7yufDqF6b5Q2+jfoFf5SPaH/WPXhQuCqvn5bNVqEXR1GzkST7e0wwxeyX0fSO/T/Uf65DBzQNHUMopTvLAAAAAElFTkSuQmCC" alt="Icon">
-                Discord Server
-            </a>
-            <a href="https://jnkie.com/overview/monodistx10" target="_blank" class="btn">
-                <img src="https://jnkie.com/favicon.ico" alt="Icon">
-                Junkie Development Profile
-            </a>
-            <a href="https://scriptblox.com/u/Unlikely_human" target="_blank" class="btn">
-                <img src="https://scriptblox.com/favicon.ico" alt="Icon">
-                Scriptblox Profile
-            </a>
-            <a href="https://www.roblox.com/users/5537576674/profile" target="_blank" class="btn">
-                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAM1BMVEVHcEwiIiIiIiIiIiIEAwIWFRW4wsz9/f6Ah43r7vLa4OeotL9kaW1KTU+RoK3I0duaqbezsCU5AAAAA3RSTlMARtYz5Vu8AAAA7ElEQVR4AYXTRwLCMAxE0RCPFLlI8f1PiwtFpn52nkdPtu2yh6/tl7aHn122/TfYt/AnBwD6BcAHi0dvIB6tlAs55ADpcS+ZTrMCOVyRpaEFgG/To5RXEB9bunXCA+17eo4t84DMb7PiAXhsCSq5j9weRA7QfGIGATi5l/23oDKB9EOdQBZg4/BU6r8I556SA+AZQIQ8w/JL9hdoh5xFA9dcaxUPqHAe1Y7qqCzA5joWG9VADoDrLXuE5d8Uc+NIVkAIRcyRquTBNNAi/iOsYBgCabGBEDxYUVAxeQceAUQe/Ozvrff35v17+18B5OUXAh1fAAgAAAAASUVORK5CYII=" alt="Icon">
-                Roblox Profile
-            </a>
+        <h3>Script:</h3>
+        <div class="code-box">
+            <code id="scriptCode">loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Loader-194050"))()</code>
+            <button class="copy-btn" onclick="copyScript()">COPY</button>
         </div>
-
-        <div class="footer">Developed by ChangBellWeMeanStay • 2026</div>
     </div>
 
-    <audio id="mus" loop autoplay src="https://github.com/tienxida112-blip/Music-Hub-Document/raw/refs/heads/main/Sleeping%20City.mp3"></audio>
-    <audio id="snd" src="https://github.com/tienxida112-blip/Music-Hub-Document/raw/refs/heads/main/flashbang-cs_qoRhxLn.mp3"></audio>
+    <div id="executors" class="page">
+        <h1><i class="fas fa-terminal"></i> Recommended Executors</h1>
+        <p>To use this script, you need a reliable executor:</p>
+        <ul>
+            <li><strong>Fast:</strong> <a href="https://weao.gg/" target="_blank">WEAO</a> or <a href="https://executors.samrat.lol/" target="_blank">SAMRAT</a></li>
+            <li><strong>Tested:</strong> <a href="https://spdmteam.com/index" target="_blank">Arceus X</a>, <a href="https://wearedevs.net/d/Solara" target="_blank">Solara</a>, <a href="https://xeno.onl/method" target="_blank">Xeno</a></li>
+            <li><strong>Risk:</strong> <a href="https://realvelocity.xyz/" target="_blank">Velocity</a> (Use with care)</li>
+        </ul>
+    </div>
 
-    <script>
-        const m = document.getElementById('mus');
-        const s = document.getElementById('snd');
-        const o = document.getElementById('flash-overlay');
-        const card = document.getElementById('card');
-        const bgs = [
-            'https://i.makeagif.com/media/11-08-2022/lqsNsd.gif',
-            'https://i.imgur.com/lY7gDxp.gif',
-            'https://i.pinimg.com/originals/85/c2/e3/85c2e3a5caec2fd8b7e6231473a84c81.gif',
-            'https://i.pinimg.com/originals/3e/3a/46/3e3a46dd7a519646ebae07af05a59e28.gif',
-            'https://i.pinimg.com/originals/0b/d9/a2/0bd9a29a53ba553b2fc84e2e0402bb3f.gif',
-            'https://i.pinimg.com/originals/e2/cd/93/e2cd93d04934361e8b45edf807b36f6f.gif',
-            'https://i.pinimg.com/originals/4a/ea/62/4aea62bee5039a1da9a1a83b4c460cb7.gif',
-            'https://i.pinimg.com/originals/71/c6/13/71c613b2136a094d6bb228dbfb01c9e7.gif'
-        ];
-        let curBg = 0;
+    <div id="about" class="page">
+        <h1><i class="fas fa-info-circle"></i> Information</h1>
+        <p>For more details about the developer and updates, visit the official link:</p>
+        <a href="https://tienxida112-blip.github.io/Music-Hub-Document/" target="_blank">View Full Documentation Here</a>
 
-        function toggleMenu() { document.getElementById('sett').classList.toggle('active'); }
-        
-        function updateBG() { 
-            document.body.style.backgroundImage = `url('${bgs[curBg]}')`; 
-            document.getElementById('bg-num').innerText = `${curBg + 1} / ${bgs.length}`;
-        }
-        function nextBG() { curBg = (curBg + 1) % bgs.length; updateBG(); }
-        function prevBG() { curBg = (curBg - 1 + bgs.length) % bgs.length; updateBG(); }
+        <div class="warning">
+            <strong><i class="fas fa-exclamation-triangle"></i> Notice:</strong>
+            Some Dropbox links have been taken down by the provider, so some music tracks might not work at the moment.
+        </div>
+    </div>
+</div>
 
-        function setVol(v) { m.volume = v / 100; }
+<script>
+    function showPage(pageId) {
+        // Ẩn tất cả các trang
+        document.querySelectorAll('.page').forEach(page => {
+            page.classList.remove('active');
+        });
+        // Bỏ active ở tất cả các nút
+        document.querySelectorAll('nav button').forEach(btn => {
+            btn.classList.remove('active');
+        });
 
-        // Logic skip 5 giây cuối của nhạc
-        m.ontimeupdate = function() {
-            if (m.duration > 0 && (m.duration - m.currentTime) < 5) {
-                m.currentTime = 0; // Quay lại từ đầu
-                m.play();
-            }
-        };
+        // Hiển thị trang được chọn
+        document.getElementById(pageId).classList.add('active');
+        // Active nút tương ứng
+        document.getElementById('btn-' + pageId).classList.add('active');
+    }
 
-        function checkTime() {
-            const h = new Date().getHours();
-            const btn = document.getElementById('flash-btn');
-            if (h >= 0 && h < 3) {
-                btn.innerText = "CLICK";
-                btn.className = "flash-trigger-btn neon-white";
-            } else {
-                btn.innerText = "DO NOT CLICK";
-                btn.className = "flash-trigger-btn neon-black";
-            }
-        }
+    function copyScript() {
+        const code = document.getElementById('scriptCode').innerText;
+        navigator.clipboard.writeText(code);
+        alert("Script copied to clipboard!");
+    }
+</script>
 
-        function flash() {
-            s.currentTime = 0; s.play();
-            card.classList.add('shake-it');
-            setTimeout(() => card.classList.remove('shake-it'), 500);
-            o.style.transition = 'none';
-            o.style.opacity = '1';
-            setTimeout(() => {
-                o.style.transition = 'opacity 15s ease-out';
-                o.style.opacity = '0';
-            }, 150);
-        }
-
-        setInterval(checkTime, 1000);
-        checkTime();
-        window.onclick = () => { if(m.paused) m.play(); };
-    </script>
 </body>
 </html>
