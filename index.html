@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,7 +17,7 @@
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-        body { background: var(--bg-body); color: var(--text-main); display: flex; min-height: 100vh; }
+        body { background: var(--bg-body); color: var(--text-main); display: flex; min-height: 100vh; overflow-x: hidden; }
 
         /* --- SIDEBAR --- */
         aside {
@@ -28,76 +28,84 @@
             height: 100vh;
             display: flex;
             flex-direction: column;
+            z-index: 100;
         }
 
-        .sidebar-brand { padding: 25px; font-size: 22px; font-weight: bold; border-bottom: 1px solid var(--border); color: white; }
-
+        .sidebar-brand { padding: 25px; font-size: 22px; font-weight: bold; border-bottom: 1px solid var(--border); color: white; display: flex; align-items: center; gap: 10px; }
         .nav-content { flex: 1; overflow-y: auto; padding: 20px 15px; }
         
         .section-title {
-            font-size: 12px;
+            font-size: 11px;
             text-transform: uppercase;
             color: var(--text-muted);
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
             margin: 20px 0 10px 10px;
-            font-weight: 700;
+            font-weight: 800;
         }
 
         .nav-item {
             width: 100%;
-            padding: 10px 15px;
+            padding: 12px 15px;
             margin-bottom: 4px;
             background: transparent;
             border: none;
             color: var(--text-main);
             text-align: left;
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 10px;
-            transition: 0.2s;
+            gap: 12px;
+            transition: all 0.2s ease;
+            font-size: 14px;
         }
 
         .nav-item:hover { background: rgba(255,255,255,0.05); }
-        .nav-item.active { background: var(--accent); color: white; }
+        .nav-item.active { background: var(--accent); color: white; font-weight: 600; }
 
         .sidebar-footer { padding: 20px; border-top: 1px solid var(--border); }
         .discord-btn {
-            display: block;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
             background: #23272a;
             color: white;
-            text-align: center;
-            padding: 10px;
-            border-radius: 6px;
+            padding: 12px;
+            border-radius: 8px;
             text-decoration: none;
             transition: 0.3s;
+            font-weight: 600;
         }
         .discord-btn:hover { background: var(--accent); }
 
         /* --- MAIN CONTENT --- */
-        main { margin-left: var(--sidebar-width); flex: 1; padding: 50px; max-width: 1000px; }
+        main { margin-left: var(--sidebar-width); flex: 1; padding: 60px; max-width: 1000px; }
 
-        .page { display: none; animation: fadeIn 0.3s ease; }
+        .page { display: none; animation: fadeIn 0.4s ease; }
         .page.active { display: block; }
 
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 
-        h1 { margin-bottom: 20px; color: white; }
-        p { line-height: 1.6; margin-bottom: 20px; color: var(--text-muted); }
+        h1 { margin-bottom: 25px; color: white; font-size: 2.5rem; }
+        h2 { margin: 30px 0 15px; color: white; font-size: 1.5rem; }
+        p { line-height: 1.8; margin-bottom: 20px; color: var(--text-main); font-size: 16px; }
 
         .code-box {
             background: #000;
             padding: 20px;
-            border-radius: 8px;
+            border-radius: 10px;
             border: 1px solid var(--border);
             position: relative;
-            margin: 20px 0;
+            margin: 25px 0;
+            font-family: 'Consolas', monospace;
+            color: #79c0ff;
+            word-break: break-all;
         }
 
-        /* --- NEXT/BACK BUTTONS --- */
+        /* --- NAV CONTROLS --- */
         .nav-controls {
-            margin-top: 50px;
+            margin-top: 60px;
             padding-top: 30px;
             border-top: 1px solid var(--border);
             display: flex;
@@ -105,24 +113,28 @@
         }
 
         .nav-btn {
-            padding: 10px 20px;
+            padding: 12px 24px;
             background: var(--bg-side);
             border: 1px solid var(--border);
             color: var(--text-main);
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
             text-decoration: none;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
+            transition: 0.3s;
         }
 
-        .nav-btn:hover { border-color: var(--accent); color: white; }
-        .nav-btn.disabled { visibility: hidden; }
+        .nav-btn:hover:not(.disabled) { border-color: var(--accent); color: white; }
+        .nav-btn.disabled { opacity: 0; pointer-events: none; }
 
-        ul { list-style: none; }
-        li { margin-bottom: 10px; padding-left: 20px; position: relative; }
-        li::before { content: "•"; color: var(--accent); position: absolute; left: 0; }
+        ul { list-style: none; margin-bottom: 20px; }
+        li { margin-bottom: 12px; padding-left: 25px; position: relative; }
+        li::before { content: "•"; color: var(--accent); position: absolute; left: 0; font-weight: bold; }
+        
+        a { color: var(--accent); text-decoration: none; }
+        a:hover { text-decoration: underline; }
     </style>
 </head>
 <body>
@@ -132,7 +144,7 @@
         <div class="nav-content">
             <div class="section-title">Get Started</div>
             <button class="nav-item active" onclick="showPage(0)">
-                <i class="fas fa-book-open"></i> Introduction
+                <i class="fas fa-rocket"></i> Introduction
             </button>
             <button class="nav-item" onclick="showPage(1)">
                 <i class="fas fa-info-circle"></i> Information
@@ -140,13 +152,13 @@
 
             <div class="section-title">Script</div>
             <button class="nav-item" onclick="showPage(2)">
-                <i class="fas fa-microchip"></i> Executor
+                <i class="fas fa-bolt"></i> Executor
             </button>
             <button class="nav-item" onclick="showPage(3)">
-                <i class="fas fa-scroll"></i> Main Script
+                <i class="fas fa-code"></i> Main Script
             </button>
             <button class="nav-item" onclick="showPage(4)">
-                <i class="fas fa-user-shield"></i> Credits
+                <i class="fas fa-user-tag"></i> Credits
             </button>
             <button class="nav-item" onclick="showPage(5)">
                 <i class="fas fa-question-circle"></i> FAQ
@@ -154,7 +166,7 @@
         </div>
 
         <div class="sidebar-footer">
-            <a href="https://discord.gg/YOUR_LINK" class="discord-btn" target="_blank">
+            <a href="https://discord.gg/rK9BYBus7h" class="discord-btn" target="_blank">
                 <i class="fab fa-discord"></i> Discord Server
             </a>
         </div>
@@ -163,55 +175,58 @@
     <main>
         <div class="page active">
             <h1>Introduction</h1>
-            <p>Chào mừng bạn đến với <b>Music Hub</b>. Đây là công cụ hỗ trợ chơi nhạc tốt nhất cho các tựa game Roblox.</p>
+            <p>Welcome to <b>Music Hub</b>. This is a special script for Roblox designed to play music seamlessly in-game.</p>
         </div>
 
         <div class="page">
             <h1>Information</h1>
-            <p>Phiên bản hiện tại: 1.0.2 (Beta)</p>
-            <p>Tác giả: <b>Tiến</b></p>
-            <p>Music Hub được phát triển nhằm mục đích giải trí, hỗ trợ phát các bài nhạc từ nhiều nguồn khác nhau một cách mượt mà nhất.</p>
+            <p>For full details about the project and real-time updates, you can view the official document here:</p>
+            <a href="https://tienxida112-blip.github.io/Music-Hub-Document/" target="_blank">View Music-Hub-Document</a>
         </div>
 
         <div class="page">
-            <h1>Recommended Executors</h1>
-            <p>Dưới đây là danh sách các trình thực thi (Executors) đã được kiểm tra:</p>
+            <h1>Executors</h1>
+            <p>To use this script, we recommend using the following executors:</p>
+            <h2>Recommended Fast Executors</h2>
             <ul>
-                <li><a href="https://weao.gg/" style="color:var(--accent)">WEAO</a> hoặc <a href="https://executors.samrat.lol/" style="color:var(--accent)">SAMRAT</a> (Nhanh & Ổn định)</li>
-                <li><b>Arceus X:</b> Phổ biến trên Mobile</li>
-                <li><b>Solara & Xeno:</b> Hỗ trợ tốt trên PC</li>
-                <li><b>Velocity:</b> Hãy cẩn thận khi sử dụng</li>
+                <li><a href="https://weao.gg/" target="_blank">What Exploit Are Online (WEAO)</a></li>
+                <li><a href="https://executors.samrat.lol/" target="_blank">SAMRAT</a></li>
             </ul>
+            <h2>Tested With</h2>
+            <ul>
+                <li><a href="https://spdmteam.com/index" target="_blank">Arceus X</a></li>
+                <li><a href="https://work.ink/2nLR/madium-install" target="_blank">Madium</a></li>
+                <li><a href="https://wearedevs.net/d/Solara" target="_blank">Solara</a></li>
+                <li><a href="https://xeno.onl/method" target="_blank">Xeno</a></li>
+            </ul>
+            <p style="color: #ffaa00;"><i class="fas fa-exclamation-triangle"></i> Careful when using <a href="https://realvelocity.xyz/" target="_blank" style="color: #ffaa00;">Velocity</a>.</p>
         </div>
 
         <div class="page">
             <h1>Main Script</h1>
-            <p>Sao chép đoạn mã sau vào Executor của bạn:</p>
             <div class="code-box">
-                <code id="luaCode">loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Loader-194050"))()</code>
+                <code>loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Loader-194050"))()</code>
             </div>
-            <p><i class="fas fa-exclamation-triangle"></i> Lưu ý: Một số link Dropbox có thể bị lỗi do quá trình lưu trữ.</p>
+            <p><i class="fas fa-book-reader"></i> <b>Read:</b> Some Dropbox links have been taken down, so some music tracks might not work currently.</p>
         </div>
 
         <div class="page">
             <h1>Credits</h1>
-            <p>Cảm ơn những người đã đóng góp cho dự án:</p>
             <ul>
-                <li><b>Tiến (Owner):</b> Lead Developer</li>
-                <li><b>Footagesus:</b> Documentation & Community Help</li>
-                <li><b>Vinh, Đạt, Tường:</b> Beta Testers</li>
+                <li><b>Me:</b> Coder</li>
+                <li><b>Footages:</b> <a href="https://footagesus.github.io/treehub-web/docs/windui" target="_blank">WindUI Library</a></li>
             </ul>
         </div>
 
         <div class="page">
-            <h1>FAQ (Câu hỏi thường gặp)</h1>
-            <p><b>Q: Script có bị ban không?</b><br>A: Hiện tại script rất an toàn, nhưng hãy luôn cẩn thận.</p>
-            <p><b>Q: Tại sao nhạc không phát?</b><br>A: Có thể link nhạc đã bị die hoặc server Roblox đó bị lỗi âm thanh.</p>
+            <h1>FAQ</h1>
+            <p><b>Q: Is this script free?</b><br>A: Yes, it is completely free to use.</p>
+            <p><b>Q: Where can I get support?</b><br>A: Join our Discord server for help and bug reports.</p>
         </div>
 
         <div class="nav-controls">
             <button id="prevBtn" class="nav-btn" onclick="changePage(-1)">
-                <i class="fas fa-arrow-left"></i> Back
+                <i class="fas fa-arrow-left"></i> Previous
             </button>
             <button id="nextBtn" class="nav-btn" onclick="changePage(1)">
                 Next <i class="fas fa-arrow-right"></i>
@@ -227,28 +242,19 @@
         function showPage(index) {
             pages[currentPage].classList.remove('active');
             navItems[currentPage].classList.remove('active');
-            
             currentPage = index;
-            
             pages[currentPage].classList.add('active');
             navItems[currentPage].classList.add('active');
 
-            // Update Nút Next/Back
             document.getElementById('prevBtn').classList.toggle('disabled', currentPage === 0);
             document.getElementById('nextBtn').classList.toggle('disabled', currentPage === pages.length - 1);
-            
-            // Cuộn lên đầu trang khi chuyển page
-            window.scrollTo(0, 0);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         function changePage(step) {
             let newPage = currentPage + step;
-            if (newPage >= 0 && newPage < pages.length) {
-                showPage(newPage);
-            }
+            if (newPage >= 0 && newPage < pages.length) showPage(newPage);
         }
-
-        // Khởi tạo trang đầu tiên
         showPage(0);
     </script>
 </body>
